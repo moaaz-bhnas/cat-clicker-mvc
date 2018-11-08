@@ -1,0 +1,91 @@
+/* ---------------------------------------------
+  Basic styles
+  ---------------------------------------------- */
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+html {
+  font: 1.1rem 'Work Sans', sans-serif; }
+
+h1 {
+  font-size: 1.602rem; }
+
+h2 {
+  font-size: 1.424rem; }
+
+h3 {
+  font-size: 1.266rem; }
+
+h4 {
+  font-size: 1.125rem; }
+
+img {
+  max-width: 100%; }
+
+/* ---------------------------------------------
+  Header
+  ---------------------------------------------- */
+header {
+  text-align: center;
+  background-color: red;
+  padding: 1rem 0.5rem; }
+  header h1 {
+    margin: 0; }
+
+/* ---------------------------------------------
+  Main
+  ---------------------------------------------- */
+/* -------------------------------
+  Section - cats menu
+  -------------------------------- */
+.cats-list-section {
+  background-color: yellow;
+  padding: 1rem 0.5rem;
+  text-align: center; }
+  .cats-list-section .cats-list {
+    margin: 0;
+    padding-left: 0;
+    list-style-type: none; }
+  .cats-list-section h2 {
+    margin: 0 0 .4rem; }
+  .cats-list-section li {
+    display: inline-block;
+    margin: .5rem .3rem; }
+  .cats-list-section button {
+    padding: .7rem 1rem; }
+  .cats-list-section .name-btn {
+    position: relative;
+    right: -4px; }
+  .cats-list-section .remove-btn {
+    position: relative;
+    left: -4px; }
+
+/* -------------------------------
+  Section - cats menu
+  -------------------------------- */
+.cat-view-section {
+  background-color: green;
+  padding: 1rem 0.5rem;
+  text-align: center; }
+  .cat-view-section h2 {
+    margin: 0; }
+  .cat-view-section h3.cat-name {
+    margin: .5rem 0; }
+  .cat-view-section .cat-btn {
+    display: block;
+    width: 100%; }
+
+.cat-clicks-area h4 {
+  margin: 0 0 .7rem; }
+
+.cat-clicks-area h4,
+.cat-clicks-area span {
+  display: inline-block; }
+
+/* -------------------------------
+  Section - add cat
+  -------------------------------- */
+.cats-adding-section {
+  background-color: lightblue;
+  padding: 1rem 0.5rem; }

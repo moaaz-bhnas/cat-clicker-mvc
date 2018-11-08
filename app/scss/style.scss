@@ -1,0 +1,127 @@
+// Variables
+$sides-padding: .5rem;
+$top-bottom-badding: 1rem;
+
+/* ---------------------------------------------
+  Basic styles
+  ---------------------------------------------- */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font: 1.1rem 'Work Sans', sans-serif;
+
+}
+
+// Type Scale - Major Second
+h1 {
+  font-size: 1.602rem;
+}
+h2 {
+  font-size: 1.424rem;
+}
+h3 {
+  font-size: 1.266rem;
+}
+h4 {
+  font-size: 1.125rem;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* ---------------------------------------------
+  Header
+  ---------------------------------------------- */
+header {
+  text-align: center;
+  background-color: red;
+  padding: $top-bottom-badding $sides-padding;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+/* ---------------------------------------------
+  Main
+  ---------------------------------------------- */
+/* -------------------------------
+  Section - cats menu
+  -------------------------------- */
+.cats-list-section {
+  background-color: yellow;
+  padding: $top-bottom-badding $sides-padding;
+  text-align: center;
+
+  .cats-list {
+    margin: 0;
+    padding-left: 0;
+    list-style-type: none;
+  }
+
+  h2 {
+    margin: 0 0 .4rem;
+  }
+
+  li {
+    display: inline-block;
+    margin: .5rem .3rem;
+  }
+
+  button {
+    padding: .7rem 1rem;
+  }
+
+  .name-btn {
+    position: relative;
+    right: -4px;
+  }
+
+  .remove-btn {
+    position: relative;
+    left: -4px;
+  }
+}
+
+/* -------------------------------
+  Section - cats menu
+  -------------------------------- */
+.cat-view-section {
+  background-color: green;
+  padding: $top-bottom-badding $sides-padding;
+  text-align: center;
+
+  h2 {
+    margin: 0;
+  }
+
+  h3.cat-name {
+    margin: .5rem 0;
+  }
+
+  .cat-btn {
+    display: block;
+    width: 100%;
+  }
+}
+
+.cat-clicks-area {
+  h4 {
+    margin: 0 0 .7rem;
+  }
+  h4, 
+  span {
+    display: inline-block;
+  }
+}
+
+/* -------------------------------
+  Section - add cat
+  -------------------------------- */
+.cats-adding-section {
+  background-color: lightblue;
+  padding: $top-bottom-badding $sides-padding;
+}

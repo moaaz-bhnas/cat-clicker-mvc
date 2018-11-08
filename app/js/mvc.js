@@ -122,7 +122,7 @@ var menuView = {
     var fragment = document.createDocumentFragment();
     names.forEach(function (name) {
       var menuItem = document.createElement('li');
-      menuItem.innerHTML = "<button type=\"button\" role=\"menuitem\" class=\"name-btn\">".concat(name, "</button>\n      <button type=\"button\" name=\"remove-btn\">\n          <abbr title=\"Remove\">x</abbr>\n      </button>");
+      menuItem.innerHTML = "<button type=\"button\" role=\"menuitem\" class=\"name-btn\">".concat(name, "</button>\n      <button type=\"button\" class=\"remove-btn\" title=\"remove\">\n          <abbr title=\"Remove\">x</abbr>\n      </button>");
       fragment.appendChild(menuItem);
     });
     this.menu.innerHTML = '';

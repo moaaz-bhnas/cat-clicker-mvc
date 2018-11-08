@@ -115,7 +115,7 @@ const menuView = {
     names.forEach(name => {
       const menuItem = document.createElement('li');
       menuItem.innerHTML = `<button type="button" role="menuitem" class="name-btn">${name}</button>
-      <button type="button" name="remove-btn">
+      <button type="button" class="remove-btn" title="remove">
           <abbr title="Remove">x</abbr>
       </button>`;
       fragment.appendChild(menuItem);
