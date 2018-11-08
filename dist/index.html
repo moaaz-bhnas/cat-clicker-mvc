@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cat Clicker Game</title>
+    <link rel="stylesheet" href="css/combined.css">
+</head>
+<body>
+    <header role="banner">
+        <h1>Cat Clicker Game</h1>
+    </header><!--/.header-->
+
+    <main role="main">
+        <section class="cats-list-section" role="region" aria-labelledby="cats-list-heading">
+            <h2 id="cats-list-heading">
+                Cats List
+            </h2>
+
+            <ul class="cats-list" role="menubar" aria-label="Cats List">
+                <!-- <li>
+                    <button type="button" role="menuitem" class="name-btn"></button>
+                    <button type="button" name="remove-btn">
+                        <abbr title="Remove">x</abbr>
+                    </button>
+                </li> -->
+                <!-- Dynamic - Number of items depends on JS -->
+            </ul><!--/.cats-list-->
+        </section><!--/.cats-list-section-->
+
+        <section class="cat-view-section" role="region" aria-labelledby="cat-view-heading">
+            <hgroup>
+                <h2 id="cat-view-heading">Cat View</h2>
+                <h3 class="cat-name"></h3>
+            </hgroup>
+
+            <div class="cat-clicks-aria">
+                <h4>Clicks Count:</h4>
+                <span class="cat-clicks"><!-- Dynamic --></span>
+            </div><!--/.clicks-count-aria-->
+
+            <button class="cat-btn">
+                <img class="cat-image" src="" alt="Cat">
+            </button><!--/.cat-->
+        </section><!--/.cat-view-section-->
+
+        <section class="cats-adding-section" role="region" aria-labelledby="cats-adding-heading">
+            <form name="cats-adding-form">
+                <h2 id="cats-adding-heading">
+                    Add Cat
+                </h2>
+                <fieldset class="cat-img-src">
+                    <legend>Cat Image</legend>
+                    <p>
+                        <label for="cat-imgfile">Upload image: </label>
+                        <input type="file" name="cat-imgfile" id="cat-imgfile" accept="image/png, image/jpeg" required>
+                    </p>
+                    or
+                    <p>
+                        <label for="cat-url">URL: </label>
+                        <input type="url" name="cat-url" id="cat-url" required>
+                    </p>
+                </fieldset>
+                <p>
+                    <label for="cat-name">Name: </label>
+                    <input type="text" id="cat-name" name="cat-name" required>
+                </p>
+                <p>
+                    <label for="color">Color: </label>
+                    <input type="color" name="color" id="color">
+                </p>
+                <p>
+                    <button type="submit">Add cat</button>
+                </p>
+            </form>
+        </section><!--/.cats-adding-section-->
+    </main><!--/.main-->
+
+    <script src="scripts/combined.js"></script>
+</body>
+</html>
