@@ -60,7 +60,7 @@ self.__precacheManifest = [
   },
   {
     "url": "scripts/combined.js",
-    "revision": "f5d83d6b4b46fe56ed497e44c72fc4e0"
+    "revision": "84a36169d213d6e22fe6264b7b9fbd66"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
