@@ -130,6 +130,7 @@ gulp.task('default', function(callback) {
 gulp.task('build', function(callback) {
   runSequence(
     'clean:dist',
+    ['sass', 'babel'],
     ['useref', 'images'],
     'generate-service-worker',
     callback
