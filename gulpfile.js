@@ -11,6 +11,7 @@ var imagemin = require('gulp-imagemin');
 var cache = require('gulp-cache');
 var del = require('del');
 var runSequence = require('run-sequence');
+var workbox = require('workbox-build');
 
 // Basic Gulp task syntax
 gulp.task('hello', function() {
@@ -95,6 +96,27 @@ gulp.task('clean:dist', function() {
   return del.sync(['dist/**/*', '!dist/images', '!dist/images/**/*']);
 });
 
+// Service Worker
+gulp.task('generate-service-worker', () => {
+  return workbox.generateSW({
+    globDirectory: 'dist',
+    globPatterns: [
+      '**/*.{html,css,js,png,jpg}'
+    ],
+    swDest: `dist/sw.js`,
+    clientsClaim: true,
+    skipWaiting: true
+  }).then(({warnings}) => {
+    // In case there are any warnings from workbox-build, log them.
+    for (const warning of warnings) {
+      console.warn(warning);
+    }
+    console.info('Service worker generation completed.');
+  }).catch((error) => {
+    console.warn('Service worker generation failed:', error);
+  });
+});
+
 // Build Sequences
 // ---------------
 
@@ -108,6 +130,7 @@ gulp.task('build', function(callback) {
   runSequence(
     'clean:dist',
     ['useref', 'images'],
+    'generate-service-worker',
     callback
   )
-})
+});

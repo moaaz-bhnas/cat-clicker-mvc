@@ -3,26 +3,18 @@
 
 if (!Modernizr.inputtypes.color) {
   // Normal text input
-  var colorInput = document.querySelector('input[type="color"]');
-  /* Add description
-  <span id="color-format-info">
-    <ul>
-      <li><strong>Optional</strong>. If not specified, a random color will be used.</li>
-      <li>Any color format is allowed.</li>
-    </ul>
-  </span>
-  */
-
-  var descriptionEle = document.createElement('span');
-  descriptionEle.id = 'color-format-info';
-  descriptionEle.innerHTML = "<ul>\n                                <li><strong>Optional</strong>. If not specified, a random color will be used.</li>\n                                <li>Any color format is allowed (e.g. red, #ff0000 or rgb(255, 0, 0)).</li>\n                              </ul>";
-  colorInput.insertAdjacentElement('afterend', descriptionEle);
-  colorInput.setAttribute('aria-describedby', 'color-format-info'); // Add color feedback
+  this.colorInput = document.querySelector('#color');
+  var colorInfo = document.querySelector('#color-info');
+  var description = document.createElement('li');
+  description.innerHTML = "<em>Any</em> color format is allowed (e.g. red, #ff0000 or rgb(255, 0, 0)).";
+  colorInfo.insertAdjacentElement('afterbegin', description); // Add color feedback
 
   colorInput.addEventListener('input', function () {
     this.style.color = 'inherit';
     this.style.color = this.value;
-  });
+  }); // Adjust the width with the other elements
+
+  colorInput.style.width = '70%';
 }
 /* Fullback: browsers that don't support built-in HTML5 form validation --- */
 // Inputs Patterns
@@ -106,3 +98,24 @@ urlInput.addEventListener('input', function (event) {
     }
   }
 });
+/* Make the label respresent the button "upload image" */
+
+var label = document.querySelector('label[for="cat-imgfile"]');
+label.addEventListener('keydown', function (event) {
+  if (event.keyCode === 32 || event.keyCode === 13) {
+    fileInput.click();
+  }
+});
+/* Service Worker */
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js', {
+    scope: '/sw-test/'
+  }).then(function (reg) {
+    // registration worked
+    console.log('Registration succeeded. Scope is ' + reg.scope);
+  }).catch(function (error) {
+    // registration failed
+    console.log('Registration failed with ' + error);
+  });
+}

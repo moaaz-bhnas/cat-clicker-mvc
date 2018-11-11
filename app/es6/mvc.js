@@ -11,37 +11,42 @@ const getElementOrder = el => {
   return index;
 }
 
+const colorIsValid = input => {
+  const testingEl = document.createElement('div');
+  testingEl.style.color = input;
+  return (testingEl.style.color) ? true : false;
+}
+
 // Cat constructor
 class Cat {
-  constructor(name, url, color = 'black') {
+  constructor(name, url, color) {
     this.name = name,
     this.url = url,
     this.clicks = 0
-    this.color = color;
+    this.color = colorIsValid(color) ? color : '#000'; 
   }
 }
 
 /* Model --- */
 const model = {
   cats: [
-    new Cat('Garfield', 'images/garfield.png'),
-    new Cat('Marie', 'images/marie.png'),
-    new Cat('Meowth', 'images/meowth.png'),
-    new Cat('Sylvester', 'images/sylvester.png'),
-    new Cat('Tom', 'images/tom.png')
+    new Cat('Garfield', 'images/garfield.png', '#FCAA16'),
+    new Cat('Sylvester', 'images/sylvester.png', '#1F2831'),
+    new Cat('Meowth', 'images/meowth.png', '#DF7645'),
+    new Cat('Marie', 'images/marie.png', '#F06594'),
+    // new Cat('Chloe', 'images/chloe.png', '#505A73'),
+    new Cat('Tom', 'images/tom.png', '#90979F')
   ],
   currentIndex: 0
 }
 
 /* Octopus --- */
 const octopus = {
-  getNames() {
-    const names = model.cats.map(cat => cat.name);
-    return names;
+  getCats() {
+    return model.cats;
   },
   getCurrentCat() {
     const currentCat = model.cats[model.currentIndex];
-    console.log(model.currentIndex, model.cats, currentCat);
     return currentCat;
   },
   incrementClicks() {
@@ -52,11 +57,11 @@ const octopus = {
   selectCat(index) {
     model.currentIndex = index;
     catView.render();
+    appView.render();
   },
   removeCat(index) {
     model.cats.splice(index, 1);
     // Adjusting the currentIndex
-    console.log(index, model.cats.length-1, index === model.cats.length-1);
     if (index < model.currentIndex) {
       model.currentIndex--;
     } else if (index === model.cats.length) {
@@ -68,17 +73,23 @@ const octopus = {
       catView.render();
     }
     menuView.render();
+    appView.render();
   },
-  addCat(name, url) {
+  addCat(name, url, color) {
     name = name[0].toUpperCase() + name.slice(1).toLowerCase();
-    model.cats.push(new Cat(name, url));
+    model.cats.push(new Cat(name, url, color));
     // Update the current cat
     model.currentIndex = model.cats.length-1;
     menuView.render();
     catView.render();
     formView.resetForm();
+    appView.render();
+  },
+  getLightTint() {
+    return appView.lightTint;
   },
   init() {
+    appView.init();
     menuView.init();
     catView.init();
     formView.init();
@@ -110,12 +121,12 @@ const menuView = {
     this.render();
   },
   render() {
-    const names = octopus.getNames();
+    const cats = octopus.getCats();
     const fragment = document.createDocumentFragment();
-    names.forEach(name => {
+    cats.forEach(cat => {
       const menuItem = document.createElement('li');
-      menuItem.innerHTML = `<button type="button" role="menuitem" class="name-btn">${name}</button>
-      <button type="button" class="remove-btn" title="remove">
+      menuItem.innerHTML = `<button style="color: ${tinycolor(cat.color).darken(25).toString()}; background-color: #${new Values(cat.color).tints(7)[10].hex}" type="button" role="menuitem" class="name-btn">${cat.name}</button>
+      <button style="color: ${tinycolor(cat.color).darken(25).toString()}; background-color: #${new Values(cat.color).tints(7)[10].hex}" type="button" class="remove-btn" title="remove">
           <abbr title="Remove">x</abbr>
       </button>`;
       fragment.appendChild(menuItem);
@@ -165,11 +176,62 @@ const formView = {
       const name = this.name.value;
       const url = (this.url.value) ? this.url.value
       : window.URL.createObjectURL(this.imgUpload.files[0]);
-      octopus.addCat(name, url);
+      const color = this.color.value;
+      octopus.addCat(name, url, color);
     })
   },
   resetForm() {
     this.form.reset();
+    this.url.required = true;
+    this.url.disabled = false;
+    this.imgUpload.required = true;
+    this.imgUpload.disabled = false;
+  }
+}
+
+const appView = {
+  init() {
+    // Sections
+    this.header = document.querySelector('header');
+    this.catViewSection = document.querySelector('.cat-view-section');
+    this.footer = document.querySelector('footer');
+    // Buttons
+    this.formBtns = document.querySelectorAll('.form-btn');
+    this.catBtn = document.querySelector('.cat-btn');
+    this.links = document.querySelectorAll('a');
+    this.render();
+  },
+  render() {
+    /* Colors --- */
+    const baseColor = octopus.getCurrentCat().color;
+    const tintsShades = new Values(baseColor).all(7); // 29
+    const dark = '#' + tintsShades[23].hex; // dark
+    const light = '#' + tintsShades[6].hex; // light
+    // Complementary
+    const complementary = tinycolor(dark).complement().toHexString();
+    const tintsShadesComplementary = new Values(complementary).all(7);
+    const darkComplementary = '#' + tintsShadesComplementary[18].hex; // dark
+    const lightComplementary = '#' + tintsShadesComplementary[3].hex; // light
+
+    /* Fill --- */
+    // Section backgrounds
+    (function setBackground(...elements) {
+      for (const element of elements) {
+        element.style.backgroundColor = light;
+      }
+    })(this.header, this.catViewSection, this.footer);
+    // Text
+    document.documentElement.style.color = dark;
+    // Links & buttons
+    for (const btn of this.formBtns) {
+      btn.style.color = darkComplementary;
+      btn.style.backgroundColor = lightComplementary;
+    }
+    for (const link of this.links) {
+      link.style.color = darkComplementary;
+    }
+    // Body background
+    document.body.style.backgroundColor = light;
   }
 }
 

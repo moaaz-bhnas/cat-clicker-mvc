@@ -2,6 +2,19 @@
 $sides-padding: .5rem;
 $top-bottom-badding: 1rem;
 
+// Breakpoints
+$break-m: 790px;
+$break-l: 1000px;
+
+// Mixins
+@mixin transition-background {
+  transition: background-color .3s;
+}
+@mixin transition-btn {
+  transition-property: background-color, box-shadow;
+  transition-duration: .2s;
+}
+
 /* ---------------------------------------------
   Basic styles
   ---------------------------------------------- */
@@ -10,8 +23,20 @@ $top-bottom-badding: 1rem;
 }
 
 html {
-  font: 1.1rem 'Work Sans', sans-serif;
+  font: 100%/1.5 'Work Sans', sans-serif;
+  transition: color .3s;
+  background-color: #fff;
 
+  @media screen and (min-width: $break-m) {
+    font-size: 105%;
+  }
+}
+
+body {
+  @media screen and (min-width: $break-l) {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
 }
 
 // Type Scale - Major Second
@@ -30,6 +55,19 @@ h4 {
 
 img {
   max-width: 100%;
+  max-height: 100%;
+}
+
+button {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 1rem;
+}
+
+abbr[title] {
+  text-decoration: none;
 }
 
 /* ---------------------------------------------
@@ -37,8 +75,9 @@ img {
   ---------------------------------------------- */
 header {
   text-align: center;
-  background-color: red;
-  padding: $top-bottom-badding $sides-padding;
+  padding: .2rem $sides-padding;
+  border-bottom: 3px solid;
+  @include transition-background;
 
   h1 {
     margin: 0;
@@ -52,9 +91,14 @@ header {
   Section - cats menu
   -------------------------------- */
 .cats-list-section {
-  background-color: yellow;
   padding: $top-bottom-badding $sides-padding;
   text-align: center;
+  background-color: #fff;
+
+  h2 {
+    position: absolute;
+    left: -100rem;
+  }
 
   .cats-list {
     margin: 0;
@@ -62,58 +106,101 @@ header {
     list-style-type: none;
   }
 
-  h2 {
-    margin: 0 0 .4rem;
-  }
-
   li {
     display: inline-block;
     margin: .5rem .3rem;
+    font-size: 1.1rem;
   }
 
   button {
-    padding: .7rem 1rem;
+    padding: .75rem 1rem;
+
+    @include transition-btn;
+  }
+
+  button:hover,
+  button:focus {
+    outline: none;
+    text-decoration: underline;
+    box-shadow: 2px 2px 7px;
   }
 
   .name-btn {
     position: relative;
     right: -4px;
+    border: 2px solid;
   }
 
   .remove-btn {
     position: relative;
     left: -4px;
+    border: 2px solid;
+    border-left: none;
   }
 }
 
 /* -------------------------------
-  Section - cats menu
+  Section - cats view
   -------------------------------- */
 .cat-view-section {
-  background-color: green;
   padding: $top-bottom-badding $sides-padding;
   text-align: center;
+  @include transition-background;
+
+  hgroup {
+    display: inline-block;
+    margin-right: 2rem;
+  }
 
   h2 {
-    margin: 0;
+    position: absolute;
+    left: -100rem;
   }
 
   h3.cat-name {
     margin: .5rem 0;
+    font-size: 1.7rem;
   }
 
   .cat-btn {
+    color: inherit;
     display: block;
-    width: 100%;
+    margin: 1rem auto 0;
+    width: 15rem;  height: 15rem;
+    border: 1px solid;
+    background-color: rgba(255, 255, 255, .6);
+    transition-property: background-color, box-shadow;
+    transition-duration: .3s;
+    overflow: hidden;
+  }
+
+  .cat-btn:hover,
+  .cat-btn:focus {
+    outline: none;
+    border: 2px solid;
+    background-color: #fff;
+    box-shadow: 2px 2px 7px;
+  }
+
+  @media screen and (min-width: $break-m) {
+    float: left;
+    width: 50%;
   }
 }
 
 .cat-clicks-area {
+  display: inline-block;
+  padding: .5rem;
+  border: 2px solid;
+  border-radius: 1rem;
+
   h4 {
-    margin: 0 0 .7rem;
+    margin: 0;
+    font-weight: normal;
   }
   h4, 
   span {
+    font-size: 1.05rem;
     display: inline-block;
   }
 }
@@ -122,6 +209,92 @@ header {
   Section - add cat
   -------------------------------- */
 .cats-adding-section {
-  background-color: lightblue;
   padding: $top-bottom-badding $sides-padding;
+
+  form {
+    max-width: 25rem;
+    margin: 0 auto;
+    padding: 1rem;
+    border: 2px solid;
+    border-radius: 1rem;
+    background-color: #fff;
+  }
+
+  input:not([type="color"]) {
+    width: 70%;
+  }
+
+  h2 {
+    margin: 0 0 .5rem;
+  }
+
+  .separator {
+    display: inline-block;
+    margin: .2rem 0;
+  }
+
+  #color-info {
+    margin: .5rem 0;
+
+    li + li {
+      margin-top: .4rem;
+    }
+  }
+
+  input#cat-imgfile {
+    display: none;
+  }
+
+  .form-btn {
+    display: inline-block;
+    padding: .62rem .7rem;
+    border: 2px solid;
+    border-radius: 1rem;
+    cursor: pointer;
+
+    @include transition-btn();
+  }
+
+  .form-btn:hover,
+  .form-btn:focus {
+    outline: none;
+    text-decoration: underline;
+    box-shadow: 2px 2px 7px;
+  }
+
+  @media screen and (min-width: $break-m) {
+    float: right;
+    width: 50%;
+  }
+  @media screen and (max-width: $break-m) {
+    background-color: #fff!important;
+  }
 }
+
+form > div {
+  margin-top: .7rem;
+
+  label {
+    display: inline-block;
+    width: 60px;
+    text-align: right;
+  }
+}
+
+/* ---------------------------------------------
+  Footer
+  ---------------------------------------------- */
+  footer {
+    text-align: center;
+    padding: $top-bottom-badding $sides-padding;
+    clear: both;
+    @include transition-background;
+
+    small {
+      font-size: 1rem;
+    }
+
+    @media screen and (min-width: $break-m) {
+      background-color: #fff!important;
+    }
+  }
