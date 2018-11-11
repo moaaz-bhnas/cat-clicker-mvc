@@ -6,7 +6,11 @@
     <meta name="description" content="Simple and delightful Cat Clicker game combined with a dynamic color scheme. Add your cat now!"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Cat Clicker Game</title>
-    <link rel="stylesheet" href="css/combined.css">
+    <!-- build:css css/combined.css -->
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- endbuild -->
 </head>
 <body>
     <header role="banner">
@@ -95,6 +99,17 @@
         </small>
     </footer>
 
-    <script src="scripts/combined.js"></script>
+    <!-- build:js scripts/combined.js -->
+    <script type="text/javascript" src="js/modernizr-custom.js"></script>
+    <script type="text/javascript" src="js/es5-shim.min.js"></script>
+    <script type="text/javascript" src="js/es5-sham.min.js"></script>
+    <script type="text/javascript" src="js/babel-polyfill.min.js"></script>
+    <script type="text/javascript" src="js/validate.min.js"></script>
+    <script type="text/javascript" src="js/color-values.js"></script>
+    <script type="text/javascript" src="js/tiny-color.js"></script>
+    <script type="text/javascript" src="js/support.js"></script>
+    <script type="text/javascript" src="js/mvc.js"></script>
+    <script type="text/javascript" src="js/rem.min.js"></script>
+    <!-- endbuild -->
 </body>
 </html>
