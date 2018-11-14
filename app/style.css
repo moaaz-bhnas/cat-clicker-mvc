@@ -319,14 +319,3 @@ footer small {
     background-color: #fff !important;
   }
 }
-
-@media screen and (max-width: 300px) {
-  .cat-view-section hgroup {
-    margin-left: 1rem;
-    margin-right: 1rem;
-  }
-
-  .cat-view-section .cat-btn {
-    width: 90%;
-  }
-}

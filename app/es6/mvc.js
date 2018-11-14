@@ -1,5 +1,26 @@
 'use strict';
 
+// Caching Images 
+window.onload = () => {
+  (function preloadImages(...urls) {
+    var imgList = [];
+    for (const url of urls) {
+        var img = new Image();
+        img.onload = function() {
+            var index = imgList.indexOf(this);
+            if (index !== -1) {
+                // remove image from the urls once it's loaded
+                // for memory consumption reasons
+                imgList.splice(index, 1);
+            }
+        }
+        imgList.push(img);
+        img.src = url;
+    }
+  })('images/garfield.png', 'images/sylvester.png', 'images/meowth.png', 'images/marie.png', 'images/tom.png');
+  console.log('images preloaded');
+}
+
 // Helper functions
 const getElementOrder = el => {
   let index = 0;
@@ -163,13 +184,22 @@ const catView = {
   }
 }
 
+/* View (form) --- */
 const formView = {
   init() {
     this.form = document.querySelector('form[name="cats-adding-form"]');
     this.imgUpload = document.querySelector('#cat-imgfile');
+    this.imgUploadLabel = document.querySelector('label[for="cat-imgfile"]');
     this.url = document.querySelector('#cat-url');
     this.name = document.querySelector('#cat-name');
     this.color = document.querySelector('#color');
+    // imgUploadLabel as button
+    this.imgUploadLabel.addEventListener('keydown', function(event) {
+      if (event.keyCode === 32 || event.keyCode === 13) {
+        fileInput.click();
+      }
+    });
+    // Add cat listener
     this.form.addEventListener('submit', (event) => {
       event.preventDefault();
       // Collect user input
@@ -214,6 +244,8 @@ const appView = {
     const lightComplementary = '#' + tintsShadesComplementary[3].hex; // light
 
     /* Fill --- */
+    // Body background
+    document.body.style.backgroundColor = light;
     // Section backgrounds
     (function setBackground(...elements) {
       for (const element of elements) {
@@ -230,9 +262,18 @@ const appView = {
     for (const link of this.links) {
       link.style.color = darkComplementary;
     }
-    // Body background
-    document.body.style.backgroundColor = light;
   }
 }
 
 octopus.init();
+
+// Register Service Worker
+if ('serviceWorker' in navigator) {
+  window.onload = function() {
+    navigator.serviceWorker.register('./sw.js').then(registration => {
+      console.log('SW registered: ', registration);
+    }).catch(registrationError => {
+      console.log('SW registration failed: ', registrationError);
+    });
+  }
+}

@@ -27,7 +27,7 @@ if (!Modernizr.formvalidation) {
   /* Validate.js --- */
   // Create the errors box
   var errorBox = document.createElement('p');
-  errorBox.classList.add('error');
+  errorBox.classimgList.add('error');
   errorBox.setAttribute('aria-live', 'polite'); // Insert it
 
   document.querySelector('#cats-adding-heading').insertAdjacentElement('afterend', errorBox); // The Validator
@@ -58,7 +58,7 @@ if (!Modernizr.formvalidation) {
 
 
 var fileInput = document.querySelector('input[name="cat-imgfile"]');
-var urlInput = document.querySelector('input[name="cat-url"]'); // Event Listeners
+var urlInput = document.querySelector('input[name="cat-url"]'); // Event imgListeners
 // File Input
 
 fileInput.addEventListener('change', function (event) {
@@ -97,23 +97,33 @@ urlInput.addEventListener('input', function (event) {
       alidator.fields['cat-imgfile'].rules = 'required|is_file_type[png,jpg,jpeg]';
     }
   }
-});
-/* Make the label respresent the button "upload image" */
+}); // Check if browser doesn't support indexOf() method
 
-var label = document.querySelector('label[for="cat-imgfile"]');
-label.addEventListener('keydown', function (event) {
-  if (event.keyCode === 32 || event.keyCode === 13) {
-    fileInput.click();
-  }
-});
-/* Service Worker */
+if (!Array.prototype.indexOf) Array.prototype.indexOf = function (Object, max, min) {
+  "use strict";
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker.register('./sw.js').then(function (registration) {
-      console.log('SW registered: ', registration);
-    }).catch(function (registrationError) {
-      console.log('SW registration failed: ', registrationError);
-    });
-  });
-}
+  return function indexOf(member, fromIndex) {
+    if (this === null || this === undefined) throw TypeError("Array.prototype.indexOf called on null or undefined");
+    var that = Object(this),
+        Len = that.length >>> 0,
+        i = min(fromIndex | 0, Len);
+    if (i < 0) i = max(0, Len + i);else if (i >= Len) return -1;
+
+    if (member === void 0) {
+      for (; i !== Len; ++i) {
+        if (that[i] === void 0 && i in that) return i;
+      } // undefined
+
+    } else if (member !== member) {
+      for (; i !== Len; ++i) {
+        if (that[i] !== that[i]) return i;
+      } // NaN
+
+    } else for (; i !== Len; ++i) {
+      if (that[i] === member) return i;
+    } // all else
+
+
+    return -1; // if the value was not found, then return -1
+  };
+}(Object, Math.max, Math.min);

@@ -1,6 +1,37 @@
-'use strict'; // Helper functions
+'use strict'; // Caching Images 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+window.onload = function () {
+  (function preloadImages() {
+    var imgList = [];
+
+    for (var _len = arguments.length, urls = new Array(_len), _key = 0; _key < _len; _key++) {
+      urls[_key] = arguments[_key];
+    }
+
+    for (var _i = 0; _i < urls.length; _i++) {
+      var url = urls[_i];
+      var img = new Image();
+
+      img.onload = function () {
+        var index = imgList.indexOf(this);
+
+        if (index !== -1) {
+          // remove image from the urls once it's loaded
+          // for memory consumption reasons
+          imgList.splice(index, 1);
+        }
+      };
+
+      imgList.push(img);
+      img.src = url;
+    }
+  })('images/garfield.png', 'images/sylvester.png', 'images/meowth.png', 'images/marie.png', 'images/tom.png');
+
+  console.log('images preloaded');
+}; // Helper functions
+
 
 var getElementOrder = function getElementOrder(el) {
   var index = 0;
@@ -161,15 +192,25 @@ var catView = {
     this.img.src = currentCat.url;
   }
 };
+/* View (form) --- */
+
 var formView = {
   init: function init() {
     var _this = this;
 
     this.form = document.querySelector('form[name="cats-adding-form"]');
     this.imgUpload = document.querySelector('#cat-imgfile');
+    this.imgUploadLabel = document.querySelector('label[for="cat-imgfile"]');
     this.url = document.querySelector('#cat-url');
     this.name = document.querySelector('#cat-name');
-    this.color = document.querySelector('#color');
+    this.color = document.querySelector('#color'); // imgUploadLabel as button
+
+    this.imgUploadLabel.addEventListener('keydown', function (event) {
+      if (event.keyCode === 32 || event.keyCode === 13) {
+        fileInput.click();
+      }
+    }); // Add cat listener
+
     this.form.addEventListener('submit', function (event) {
       event.preventDefault(); // Collect user input
 
@@ -216,15 +257,17 @@ var appView = {
     var lightComplementary = '#' + tintsShadesComplementary[3].hex; // light
 
     /* Fill --- */
-    // Section backgrounds
+    // Body background
+
+    document.body.style.backgroundColor = light; // Section backgrounds
 
     (function setBackground() {
-      for (var _len = arguments.length, elements = new Array(_len), _key = 0; _key < _len; _key++) {
-        elements[_key] = arguments[_key];
+      for (var _len2 = arguments.length, elements = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        elements[_key2] = arguments[_key2];
       }
 
-      for (var _i = 0; _i < elements.length; _i++) {
-        var element = elements[_i];
+      for (var _i2 = 0; _i2 < elements.length; _i2++) {
+        var element = elements[_i2];
         element.style.backgroundColor = light;
       }
     })(this.header, this.catViewSection, this.footer); // Text
@@ -265,8 +308,7 @@ var appView = {
       for (var _iterator2 = this.links[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
         var link = _step2.value;
         link.style.color = darkComplementary;
-      } // Body background
-
+      }
     } catch (err) {
       _didIteratorError2 = true;
       _iteratorError2 = err;
@@ -281,8 +323,16 @@ var appView = {
         }
       }
     }
-
-    document.body.style.backgroundColor = light;
   }
 };
-octopus.init();
+octopus.init(); // Register Service Worker
+
+if ('serviceWorker' in navigator) {
+  window.onload = function () {
+    navigator.serviceWorker.register('./sw.js').then(function (registration) {
+      console.log('SW registered: ', registration);
+    }).catch(function (registrationError) {
+      console.log('SW registration failed: ', registrationError);
+    });
+  };
+}

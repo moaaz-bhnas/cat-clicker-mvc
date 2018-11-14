@@ -26,7 +26,7 @@ if (!Modernizr.formvalidation) {
   /* Validate.js --- */
   // Create the errors box
   const errorBox = document.createElement('p');
-  errorBox.classList.add('error');
+  errorBox.classimgList.add('error');
   errorBox.setAttribute('aria-live', 'polite');
   // Insert it
   document.querySelector('#cats-adding-heading').insertAdjacentElement('afterend', errorBox);
@@ -59,7 +59,7 @@ if (!Modernizr.formvalidation) {
 const fileInput = document.querySelector('input[name="cat-imgfile"]');
 const urlInput = document.querySelector('input[name="cat-url"]');
 
-// Event Listeners
+// Event imgListeners
 // File Input
 fileInput.addEventListener('change', function(event) {
   console.log(1);
@@ -94,21 +94,19 @@ urlInput.addEventListener('input', function(event) {
   }
 });
 
-/* Make the label respresent the button "upload image" */
-const label = document.querySelector('label[for="cat-imgfile"]');
-label.addEventListener('keydown', function(event) {
-  if (event.keyCode === 32 || event.keyCode === 13) {
-    fileInput.click();
-  }
-});
+// Check if browser doesn't support indexOf() method
+if (!Array.prototype.indexOf)  Array.prototype.indexOf = (function(Object, max, min){
+  "use strict";
+  return function indexOf(member, fromIndex) {
+    if(this===null||this===undefined)throw TypeError("Array.prototype.indexOf called on null or undefined");
+    
+    var that = Object(this), Len = that.length >>> 0, i = min(fromIndex | 0, Len);
+    if (i < 0) i = max(0, Len+i); else if (i >= Len) return -1;
+    
+    if(member===void 0){ for(; i !== Len; ++i) if(that[i]===void 0 && i in that) return i; // undefined
+    }else if(member !== member){   for(; i !== Len; ++i) if(that[i] !== that[i]) return i; // NaN
+    }else                           for(; i !== Len; ++i) if(that[i] === member) return i; // all else
 
-/* Service Worker */
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').then(registration => {
-      console.log('SW registered: ', registration);
-    }).catch(registrationError => {
-      console.log('SW registration failed: ', registrationError);
-    });
-  });
-}
+    return -1; // if the value was not found, then return -1
+  };
+})(Object, Math.max, Math.min);

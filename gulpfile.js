@@ -7,12 +7,16 @@ var useref = require('gulp-useref');
 var uglify = require('gulp-uglify');
 var gulpIf = require('gulp-if');
 var cssnano = require('gulp-cssnano');
+var htmlmin = require('gulp-htmlmin');
 var imagemin = require('gulp-imagemin');
 var cache = require('gulp-cache');
 var del = require('del');
 var runSequence = require('run-sequence');
 var workbox = require('workbox-build');
 var deploy = require('gulp-gh-pages');
+var purify = require('gulp-purifycss');
+var gcmq = require('gulp-group-css-media-queries');
+var inlinesource = require('gulp-inline-source');
 
 // Basic Gulp task syntax
 gulp.task('hello', function() {
@@ -66,14 +70,36 @@ gulp.task('watch', function() {
 // Optimization Tasks 
 // ------------------
 
-// Optimizing CSS and JavaScript 
+// Optimizing CSS, JavaScript and HTML
 gulp.task('useref', function() {
-
   return gulp.src('app/*.html')
+    .pipe(inlinesource())
     .pipe(useref())
     .pipe(gulpIf('*.js', uglify()))
-    .pipe(gulpIf('*.css', cssnano()))
+    // .pipe(gulpIf('*.css', cssnano()))
+    .pipe(gulpIf('*.html', htmlmin({ collapseWhitespace: true })))
     .pipe(gulp.dest('dist'));
+});
+
+// Remove unused CSS
+gulp.task('unusedcss', function() {
+  return gulp.src('app/css/normalize.css')
+    .pipe(purify(['app/index.html']))
+    .pipe(gulp.dest('app/css'));
+});
+
+// Combine Media Queries
+gulp.task('gcmq', function () {
+  gulp.src('app/css/style.css')
+    .pipe(gcmq())
+    .pipe(gulp.dest('app/css'));
+});
+
+// Inlining Resources
+gulp.task('inlinesource', function () {
+  return gulp.src('src/index.html')
+      .pipe(inlinesource())
+      .pipe(gulp.dest('./out'));
 });
 
 // Optimizing Images 
@@ -130,8 +156,9 @@ gulp.task('default', function(callback) {
 gulp.task('build', function(callback) {
   runSequence(
     'clean:dist',
-    ['sass', 'babel'],
-    ['useref', 'images'],
+    ['sass', 'babel', 'unusedcss'],
+    'gcmq', 'images',
+    'useref',
     'generate-service-worker',
     callback
   )
