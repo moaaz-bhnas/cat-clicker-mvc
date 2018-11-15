@@ -32,7 +32,7 @@ self.__precacheManifest = [
   },
   {
     "url": "images/marie.png",
-    "revision": "f5fd4c981cd793c28686f21fddf27f71"
+    "revision": "82eeb0ba87fe6c963aa7734a05ef7043"
   },
   {
     "url": "images/meowth.png",
@@ -52,7 +52,7 @@ self.__precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "424af6181dafa34d5fcec5d9905faf14"
+    "revision": "b3e6becc49fe1cffe2ee8f3a0c097550"
   },
   {
     "url": "scripts/combined.js",
