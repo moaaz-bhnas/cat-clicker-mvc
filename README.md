@@ -1,6 +1,11 @@
-## Cat Clicker
+# Cat Clicker
 The idea is taken from [Cow Clicker](http://bogost.com/writing/blog/cow_clicker_1/) facebook game where you click a cow every 6 hours. Here you click a cat, the number increases by one.  
 As I like playing with colors, the whole interface color theme changes depending on the cat's color. You can also add your cat with its own color :D
+
+## Quality Standards
+- Fully accessible.
+- Cross-browser compatible (Works on most common browsers available, including IE).
+- Performant and responsive.
 
 ## Live
 https://moaaz-bhnas.github.io/cat-clicker-mvc/
